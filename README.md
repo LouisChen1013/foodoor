@@ -3,7 +3,7 @@
 Please run npm install
 
 
-If you miss some packages/dependencies, try to install the following packages 
+If you miss any packages/dependencies, try to install the following packages 
 
 Package installed:
 
