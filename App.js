@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 
+import ActionBarImage from "./components/ActionBarImage";
 import Login from './components/login';
 import Signup from './components/signup';
 import Dashboard from './components/dashboard';
+import Account from './components/account';
+import CategoryScreen from './components/categoryScreen';
 
 
 
@@ -13,25 +15,34 @@ import Dashboard from './components/dashboard';
 const RootStack = createStackNavigator(
   {
     Signup: {
-      screen: Signup,
+      screen: Signup
     },
     Login: {
       screen: Login
     },
     Dashboard: {
       screen: Dashboard
+    },
+    Account: {
+      screen: Account
+    },
+    CategoryScreen: {
+      screen: CategoryScreen
     }
   },
   {
     initialRouteName: 'Signup',
     defaultNavigationOptions: {
+      title: "",
+      headerLeft: () => <ActionBarImage />,
       headerStyle: {
-        backgroundColor: '#f4511e',
+        backgroundColor: 'black',
+        height: 80
       },
-      headerTintColor: '#fff',
+      headerTintColor: 'white',
       headerTitleStyle: {
         fontWeight: 'bold',
-      },
+      }
     }
   }
 );
