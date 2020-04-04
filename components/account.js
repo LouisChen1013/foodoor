@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import firebase from '../database/firebase';
 import { Icon, SearchBar } from "react-native-elements";
 
-export default class Dashboard extends Component {
+export default class Account extends Component {
     constructor() {
         super();
         this.state = {
@@ -11,27 +11,31 @@ export default class Dashboard extends Component {
         }
     }
 
-    render() {
-        return (
-            // <View style={styles.container}>
-            //     <Text style={styles.textStyle}>
-            //         Hello, {this.state.displayName}
-            //     </Text>
+    signOut = () => {
+        firebase.auth().signOut().then(() => {
+            this.props.navigation.navigate('Login')
+        })
+            .catch(error => this.setState({ errorMessage: error.message }))
+    }
 
-            //     <Button
-            //         color="#3740FE"
-            //         title="Logout"
-            //         onPress={() => this.signOut()}
-            //     />
-            // </View>
+    render() {
+        this.state = {
+            displayName: firebase.auth().currentUser.displayName,
+            uid: firebase.auth().currentUser.uid,
+            email: firebase.auth().currentUser.email
+        }
+        return (
             <View style={styles.container}>
                 <View style={styles.topContainer}>
-
-                </View>
-                <View style={styles.middleContainer}>
-                    <TouchableOpacity style={styles.requestDriver} onPress={() => this.props.navigation.navigate("DriverInformation")}>
-                        <Text style={styles.textstyle}>Request Driver</Text>
-                    </TouchableOpacity>
+                    <Text style={styles.textStyle}>
+                        Hello, {this.state.displayName}
+                    </Text>
+                    <Text style={styles.textStyle}>{this.state.email}</Text>
+                    <Button
+                        color="#3740FE"
+                        title="Logout"
+                        onPress={() => this.signOut()}
+                    />
                 </View>
                 <View style={styles.bottomContainer}>
                     <View style={styles.buttomContainer1}>
@@ -76,11 +80,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    textstyle: {
-        color: 'white'
+    textStyle: {
+        fontSize: 20
     },
     topContainer: {
-        height: '75%'
+        height: '90%',
+        justifyContent: "center",
+        alignItems: "center",
     },
     middleContainer: {
         height: '15%'

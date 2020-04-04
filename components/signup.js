@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../database/firebase';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input, Button } from 'react-native-elements';
 
 
 export default class Signup extends Component {
@@ -11,31 +13,57 @@ export default class Signup extends Component {
             displayName: '',
             email: '',
             password: '',
-            isLoading: false
+            isLoading: false,
+            emailErrorMessage: '',
+            passwordErrorMessage: '',
+            usernameErrorMessage: ''
         }
     }
 
+    // handling user input (update when user type)
     updateInputVal = (val, prop) => {
         const state = this.state;
         state[prop] = val;
         this.setState(state);
     }
 
+    // handling the user registration 
     registerUser = () => {
-        if (this.state.email === '' && this.state.password === '') {
-            Alert.alert('Enter details to signup!')
-        } else {
+        if (this.state.displayName === '') {
+            this.setState({
+                usernameErrorMessage: 'Please Enter Your Name'
+            })
+        }
+        else if (this.state.email === '' || /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(this.state.email) == false) {
+            this.setState({
+                emailErrorMessage: 'Please Enter Valid Email',
+                usernameErrorMessage: ''
+            })
+        } else if (this.state.password === '' || this.state.password.length < 5) {
+            this.setState({
+                passwordErrorMessage: 'Please Enter Your Password (at least 6 characters)',
+                usernameErrorMessage: '',
+                emailErrorMessage: ''
+
+            })
+        }
+        else {
             this.setState({
                 isLoading: true,
+                emailErrorMessage: '',
+                passwordErrorMessage: '',
+                usernameErrorMessage: ''
             })
             firebase
                 .auth()
+                // method to sign up via Firebase API
                 .createUserWithEmailAndPassword(this.state.email, this.state.password)
                 .then((res) => {
                     res.user.updateProfile({
                         displayName: this.state.displayName
                     })
                     console.log('User registered successfully!')
+                    alert("You have registered successfully! Please login")
                     this.setState({
                         isLoading: false,
                         displayName: '',
@@ -52,43 +80,75 @@ export default class Signup extends Component {
         if (this.state.isLoading) {
             return (
                 <View style={styles.preloader}>
-                    <ActivityIndicator size="large" color="#9E9E9E" />
+                    <ActivityIndicator size="large" color="#2119bf" />
                 </View>
             )
         }
         return (
             <View style={styles.container}>
-                <TextInput
-                    style={styles.inputStyle}
-                    placeholder="Name"
+                <Input
+                    containerStyle={styles.inputContainer}
+                    placeholder='Name'
+                    leftIconContainerStyle={styles.iconStyle}
+                    leftIcon={
+                        <Icon
+                            name='user'
+                            type='font-awesome'
+                            size={20}
+                            color='grey'
+                        />
+                    }
                     value={this.state.displayName}
                     onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+                    errorMessage={this.state.usernameErrorMessage}
                 />
-                <TextInput
-                    style={styles.inputStyle}
-                    placeholder="Email"
+                <Input
+                    containerStyle={styles.inputContainer}
+                    placeholder='Email'
+                    leftIconContainerStyle={styles.iconStyle}
+                    leftIcon={
+                        <Icon
+                            name='envelope'
+                            type='font-awesome'
+                            size={18}
+                            color='grey'
+                        />
+                    }
                     value={this.state.email}
                     onChangeText={(val) => this.updateInputVal(val, 'email')}
+                    errorMessage={this.state.emailErrorMessage}
                 />
-                <TextInput
-                    style={styles.inputStyle}
-                    placeholder="Password"
+                <Input
+                    containerStyle={styles.inputContainer}
+                    placeholder='Password'
+                    leftIconContainerStyle={styles.iconStyle}
+                    leftIcon={
+                        <Icon
+                            name='lock'
+                            type='font-awesome'
+                            size={20}
+                            color='grey'
+                        />
+                    }
                     value={this.state.password}
                     onChangeText={(val) => this.updateInputVal(val, 'password')}
                     maxLength={15}
                     secureTextEntry={true}
+                    errorMessage={this.state.passwordErrorMessage}
                 />
                 <Button
-                    color="#3740FE"
-                    title="Signup"
+                    containerStyle={{ marginTop: 30 }}
+                    raised
+                    color="#2735e8"
+                    title="Sign Up"
                     onPress={() => this.registerUser()}
                 />
-
                 <Text
                     style={styles.loginText}
                     onPress={() => this.props.navigation.navigate('Login')}>
                     Already Registered? Click here to login
-        </Text>
+                </Text>
+
             </View>
         );
     }
@@ -103,17 +163,12 @@ const styles = StyleSheet.create({
         padding: 35,
         backgroundColor: '#fff'
     },
-    inputStyle: {
-        width: '100%',
-        marginBottom: 15,
-        paddingBottom: 15,
-        alignSelf: "center",
-        borderColor: "#ccc",
-        borderBottomWidth: 1
+    inputContainer: {
+        marginBottom: 10
     },
     loginText: {
         color: '#3740FE',
-        marginTop: 25,
+        marginTop: 35,
         textAlign: 'center'
     },
     preloader: {
@@ -125,5 +180,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff'
+    },
+    iconStyle: {
+        marginRight: 10
     }
 });
