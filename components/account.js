@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import firebase from '../database/firebase';
-import { Icon, SearchBar } from "react-native-elements";
+import { Icon, Button } from "react-native-elements";
 
 export default class Account extends Component {
     constructor() {
@@ -59,20 +59,6 @@ export default class Account extends Component {
     }
 }
 
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         display: "flex",
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         padding: 35,
-//         backgroundColor: '#fff'
-//     },
-//     textStyle: {
-//         fontSize: 15,
-//         marginBottom: 20
-//     }
-// });
 
 const styles = StyleSheet.create({
     container: {
@@ -81,7 +67,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     textStyle: {
-        fontSize: 20
+        fontSize: 20,
+        marginBottom: 10
     },
     topContainer: {
         height: '90%',

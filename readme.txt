@@ -10,3 +10,8 @@ npm install react-native-elements
 
 npm install axios
 
+
+npm install react-native-picker-select
+
+
+

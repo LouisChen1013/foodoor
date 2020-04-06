@@ -31,7 +31,7 @@ const RootStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'Signup',
+    initialRouteName: 'Login',
     defaultNavigationOptions: {
       title: "",
       headerLeft: () => <ActionBarImage />,

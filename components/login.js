@@ -15,8 +15,36 @@ export default class Login extends Component {
             password: '',
             isLoading: false,
             emailErrorMessage: '',
-            passwordErrorMessage: ''
+            passwordErrorMessage: '',
+            lat: '',
+            long: '',
         }
+    }
+
+    _getLocationPermissions = async () => {
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== 'granted') {
+            this.setState({
+                locationPermission: false,
+            });
+        } else {
+            this.setState({
+                locationPermission: true
+            });
+        }
+    };
+
+    componentDidMount() {
+        this._getLocationPermissions();
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log('My position: ' + position.coords.latitude + ', ' + position.coords.longitude);
+            this.setState({
+                // position: coordinates
+                lat: position.coords.latitude,
+                long: position.coords.longitude
+            })
+        },
+            (error) => alert(JSON.stringify(error)));
     }
 
     // handling user input (update when user type)
@@ -58,7 +86,11 @@ export default class Login extends Component {
                         email: '',
                         password: ''
                     })
-                    this.props.navigation.navigate('Dashboard')
+                    this.props.navigation.navigate('Dashboard',
+                        {
+                            lat: this.state.lat,
+                            long: this.state.long
+                        })
                 })
                 .catch(error => {
                     errorCode = error.code;
