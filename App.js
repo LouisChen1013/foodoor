@@ -2,12 +2,14 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 
-import ActionBarImage from "./components/ActionBarImage";
+import ActionBarImage from "./components/actionBarImage";
 import Login from './components/login';
 import Signup from './components/signup';
 import Dashboard from './components/dashboard';
 import Account from './components/account';
-import CategoryScreen from './components/categoryScreen';
+import Food from './components/food'
+import Cart from './components/cart'
+// import CategoryScreen from './components/categoryScreen';
 
 
 
@@ -26,9 +28,12 @@ const RootStack = createStackNavigator(
     Account: {
       screen: Account
     },
-    CategoryScreen: {
-      screen: CategoryScreen
-    }
+    Food: {
+      screen: Food
+    },
+    Cart: {
+      screen: Cart
+    },
   },
   {
     initialRouteName: 'Login',

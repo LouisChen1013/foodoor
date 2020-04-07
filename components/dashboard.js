@@ -115,23 +115,17 @@ export default class Dashboard extends Component {
                                                     Pirce Range: {item.restaurant.price_range}{"\n"}
                                                     Average Cost For Two: ${item.restaurant.average_cost_for_two}{"\n"}
                                                     Locattion: {item.restaurant.location.address}{"\n"}
-
-
                                                 </Text>
                                                 <Button
                                                     icon={<Icon name='info-circle'
                                                         type='font-awesome'
                                                         color='white' />}
                                                     title='   VIEW DETAILS'
-                                                // onPress={() =>
-                                                //     this.props.navigation.navigate('Details', {
-                                                //         eventName: item.name,
-                                                //         date: item.dates.start.localDate,
-                                                //         eventImage: item.images[0].url,
-                                                //         distance: item.distance,
-                                                //         url: item.url,
-                                                //         info: item.info
-                                                //     })}
+                                                    onPress={() =>
+                                                        this.props.navigation.navigate('Food', {
+                                                            // eventName: item.name,
+                                                            restaurantName: item.restaurant.name
+                                                        })}
                                                 />
                                             </Card>
                                         )
@@ -167,17 +161,20 @@ export default class Dashboard extends Component {
                 <View style={styles.bottomContainer}>
                     <View style={styles.buttomContainer1}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("Dashboard")}>
-                            <Icon name="home" type="material" size={35} color={'white'} />
+                            <Icon name="restaurant" type="material" size={35} color={'white'} />
+                            <Text style={{ color: 'white' }}>Restaurants</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttomContainer2}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("")}>
-                            <Icon name="directions-car" type="material" size={35} color={'white'} />
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Cart")}>
+                            <Icon name="shopping-cart" type="material" size={35} color={'white'} />
+                            <Text style={{ color: 'white' }}>Cart</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttomContainer3}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("Account")}>
                             <Icon name="account-circle" type="material" size={35} color={'white'} />
+                            <Text style={{ color: 'white' }}>Profile</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
