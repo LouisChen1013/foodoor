@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, TouchableOpacity, ActivityIndicator, FlatList, Picker } from 'react-native';
-import { Icon, SearchBar, Card } from "react-native-elements";
+import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { Icon, SearchBar, Card, Button } from "react-native-elements";
 import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
 
@@ -24,8 +24,8 @@ export default class Dashboard extends Component {
         try {
             const result = await axios.request({
                 method: 'get',
-                url: 'https://developers.zomato.com/api/v2.1/search?lat=' + this.props.navigation.state.params.lat + '&lon=' + this.props.navigation.state.params.long,
-                // url: 'https://developers.zomato.com/api/v2.1/search?lat=49.2252619709647&lon=-123.01240031849',
+                // url: 'https://developers.zomato.com/api/v2.1/search?lat=' + this.props.navigation.state.params.lat + '&lon=' + this.props.navigation.state.params.long,
+                url: 'https://developers.zomato.com/api/v2.1/search?lat=49.2252619709647&lon=-123.01240031849',
                 headers: {
                     'Content-Type': 'application/json',
                     'user-key': '69406d022b48d028657df578276b458e'
@@ -77,18 +77,6 @@ export default class Dashboard extends Component {
                         onSubmitEditing={this.searchReq}
                         round
                     />
-                    <Picker
-                        value="default"
-                        onValueChange={(value) => {
-                            this.setState({
-                                sort: value,
-                            }); { this.searchReq }
-                        }}
-                        mode="dropdown"
-                    >
-                        <item label="Cost" value="cost" />
-                        <item label="Rating" value="rating" />
-                    </Picker>
                 </View>
                 <View style={styles.middleContainer}>
                     {
@@ -129,13 +117,16 @@ export default class Dashboard extends Component {
                                                     Locattion: {item.restaurant.location.address}{"\n"}
                                                 </Text>
                                                 <Button
-                                                    icon={<Icon name='info-circle'
-                                                        type='font-awesome'
-                                                        color='white' />}
-                                                    title='   VIEW DETAILS'
+                                                    icon={
+                                                        <Icon
+                                                            name='restaurant-menu'
+                                                            type='MaterialIcons'
+                                                            color="white"
+                                                        />
+                                                    }
+                                                    title='  VIEW MENU'
                                                     onPress={() =>
                                                         this.props.navigation.navigate('Food', {
-                                                            // eventName: item.name,
                                                             restaurantName: item.restaurant.name
                                                         })}
                                                 />
