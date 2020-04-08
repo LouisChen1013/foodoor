@@ -41,8 +41,15 @@ export default class Cart extends Component {
     }
 
     // Send email confirmation using Post method and sendgrid API
-    sendEmail() {
-        let body = { "personalizations": [{ "to": [{ "email": firebase.auth().currentUser.email }], "subject": "Thank you for your order at Foodoor" }], "from": { "email": "chenhonglin1013@hotmail.com" }, "content": [{ "type": "text/plain", "value": "We've received your order, and the restaurant will have your food ready soon. Please be patient, and we will deliver the food to you as soon as possible. If you have any further questions, please contact customer service at 1234@gmail.com or call 123-4567-8910" }] }
+    sendEmail = () => {
+        // console.log(this.state.dataCart)
+        const email_cart = [];
+        for (var i = 0; i < this.state.dataCart.length; i++) {
+            email_cart.push('Name: ' + this.state.dataCart[i].food.name + ' ' + 'Quantity: ' + this.state.dataCart[i].quantity + '\n');
+        }
+        const email_cart_string = email_cart.toString().replace(/,/g, "")
+        // console.log(email_cart_string)
+        let body = { "personalizations": [{ "to": [{ "email": firebase.auth().currentUser.email }], "subject": "Thank you for your order at Foodoor" }], "from": { "email": "chenhonglin1013@hotmail.com" }, "content": [{ "type": "text/plain", "value": "We've received your order, and the restaurant will have your food ready soon. Please be patient, and we will deliver the food to you as soon as possible. Below is your order summary\n\n" + email_cart_string + '\nTotal Price: ' + total_price + "\n\nIf you have any further questions, please contact customer service at 1234@gmail.com or call 123-4567-8910" }] }
         return fetch('https://api.sendgrid.com/v3/mail/send', {
             method: 'POST',
             headers: {
@@ -186,13 +193,15 @@ export default class Cart extends Component {
     }
 
     // Calculate Total Price
-    onLoadTotal() {
+    onLoadTotal = () => {
         var total = 0
         const cart = this.state.dataCart
 
         for (var i = 0; i < cart.length; i++) {
             total = total + (cart[i].price * cart[i].quantity)
         }
+        global.total_price = total;
+
         return total
     }
 
@@ -224,16 +233,22 @@ export default class Cart extends Component {
     // Empty Cart after oder
     emptyCart = () => {
 
-        this.setState({
-            dataCar: []
-        })
+        // this.setState({
+        //     dataCar: []
+        // })
         Alert.alert(
             'Thank you!',
             'Please check your email for your order!',
             [
                 {
                     text: 'Got it!',
-                    onPress: () => this.props.navigation.navigate("Dashboard")
+                    onPress: () => {
+                        this.setState({
+                            dataCar: []
+                        }); this.props.navigation.navigate("Dashboard")
+                    }
+                    // onPress: () => this.props.navigation.navigate("Dashboard")
+                    // onPress={() => { this.sendEmail(); this.emptyCart(); }}
                 }
             ]
         )

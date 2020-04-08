@@ -93,7 +93,7 @@ export default class Food extends Component {
                         resizeMode="contain"
                         source={{ uri: item.image }} />
                     <View style={{ height: ((width / 2) - 20) - 90, backgroundColor: 'transparent', width: ((width / 2) - 20) - 10 }} />
-                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'center' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16, textAlign: 'center' }}>
                         {item.name}
                     </Text>
                     <Text style={{ fontSize: 14, textAlign: 'center' }}>Descp Food and Details</Text>
