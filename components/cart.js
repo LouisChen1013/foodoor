@@ -112,9 +112,9 @@ export default class Cart extends Component {
                             <ScrollView>
 
                                 {
-                                    this.state.dataCart.map((item, i, index) => {
+                                    this.state.dataCart.map((item, i) => {
                                         return (
-                                            <View style={{ width: width - 20, margin: 10, backgroundColor: 'transparent', flexDirection: 'row', borderBottomWidth: 2, borderColor: "#cccccc", paddingBottom: 10 }}>
+                                            <View key={i} style={{ width: width - 20, margin: 10, backgroundColor: 'transparent', flexDirection: 'row', borderBottomWidth: 2, borderColor: "#cccccc", paddingBottom: 10 }}>
                                                 <Image resizeMode={"contain"} style={{ width: width / 3, height: width / 3 }} source={{ uri: item.food.image }} />
                                                 <View style={{ flex: 1, backgroundColor: 'trangraysparent', padding: 10, justifyContent: "space-between" }}>
                                                     <View>
@@ -233,9 +233,6 @@ export default class Cart extends Component {
     // Empty Cart after oder
     emptyCart = () => {
 
-        // this.setState({
-        //     dataCar: []
-        // })
         Alert.alert(
             'Thank you!',
             'Please check your email for your order!',
@@ -247,8 +244,6 @@ export default class Cart extends Component {
                             dataCar: []
                         }); this.props.navigation.navigate("Dashboard")
                     }
-                    // onPress: () => this.props.navigation.navigate("Dashboard")
-                    // onPress={() => { this.sendEmail(); this.emptyCart(); }}
                 }
             ]
         )
