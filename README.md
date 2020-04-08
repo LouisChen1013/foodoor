@@ -21,4 +21,6 @@ npm install axios
 
 npm install react-native-picker-select
 
+npm install --save react-native-sendgrid
+
 
