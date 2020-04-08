@@ -9,7 +9,6 @@ import Dashboard from './components/dashboard';
 import Account from './components/account';
 import Food from './components/food'
 import Cart from './components/cart'
-// import CategoryScreen from './components/categoryScreen';
 
 
 
@@ -36,7 +35,7 @@ const RootStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Signup',
     defaultNavigationOptions: {
       title: "",
       headerLeft: () => <ActionBarImage />,

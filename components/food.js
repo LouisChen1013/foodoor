@@ -17,6 +17,8 @@ export default class Food extends Component {
         }
     }
 
+
+    // Fetch the menu from API(tutofox)
     componentDidMount() {
         const url = "http://tutofox.com/foodapp/api.json"
         return fetch(url)
@@ -45,7 +47,6 @@ export default class Food extends Component {
                 </View>
                 <View style={styles.middleContainer}>
                     <View style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
-                        {/* <Text style={styles.text}>{restaurantName}</Text> */}
                         <View style={{ width: width, borderRadius: 20, backgroundColor: 'white' }}>
                             <FlatList
                                 //horizontal={true}
@@ -81,7 +82,7 @@ export default class Food extends Component {
         );
     }
 
-
+    // Disply Food Item
     _renderItemFood(item) {
         let catg = this.state.selectCatg
         if (catg == 0 || catg == item.categorie) {
@@ -92,10 +93,10 @@ export default class Food extends Component {
                         resizeMode="contain"
                         source={{ uri: item.image }} />
                     <View style={{ height: ((width / 2) - 20) - 90, backgroundColor: 'transparent', width: ((width / 2) - 20) - 10 }} />
-                    <Text style={{ fontWeight: 'bold', fontSize: 22, textAlign: 'center' }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'center' }}>
                         {item.name}
                     </Text>
-                    <Text>Descp Food and Details</Text>
+                    <Text style={{ fontSize: 14, textAlign: 'center' }}>Descp Food and Details</Text>
                     <Text style={{ fontSize: 20, color: "green" }}>${item.price}</Text>
 
                     <TouchableOpacity
@@ -118,6 +119,7 @@ export default class Food extends Component {
         }
     }
 
+    // Add item to the cart in local storage, and can be retrieve after 
     onClickAddCart(data) {
 
         const itemcart = {

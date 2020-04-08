@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableOpacity, ActivityIndicator, FlatList, Picker } from 'react-native';
 import { Icon, SearchBar, Card } from "react-native-elements";
 import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
@@ -77,6 +77,18 @@ export default class Dashboard extends Component {
                         onSubmitEditing={this.searchReq}
                         round
                     />
+                    <Picker
+                        value="default"
+                        onValueChange={(value) => {
+                            this.setState({
+                                sort: value,
+                            }); { this.searchReq }
+                        }}
+                        mode="dropdown"
+                    >
+                        <item label="Cost" value="cost" />
+                        <item label="Rating" value="rating" />
+                    </Picker>
                 </View>
                 <View style={styles.middleContainer}>
                     {

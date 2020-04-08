@@ -7,7 +7,7 @@ export default class Account extends Component {
     constructor() {
         super();
         this.state = {
-            uid: ''
+            uid: '',
         }
     }
 
@@ -40,17 +40,20 @@ export default class Account extends Component {
                 <View style={styles.bottomContainer}>
                     <View style={styles.buttomContainer1}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("Dashboard")}>
-                            <Icon name="home" type="material" size={35} color={'white'} />
+                            <Icon name="restaurant" type="material" size={35} color={'white'} />
+                            <Text style={{ color: 'white' }}>Restaurants</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttomContainer2}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("")}>
-                            <Icon name="directions-car" type="material" size={35} color={'white'} />
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Cart")}>
+                            <Icon name="shopping-cart" type="material" size={35} color={'white'} />
+                            <Text style={{ color: 'white' }}>Cart</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttomContainer3}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("Account")}>
                             <Icon name="account-circle" type="material" size={35} color={'white'} />
+                            <Text style={{ color: 'white' }}>Profile</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

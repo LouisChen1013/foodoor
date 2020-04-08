@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions, ScrollView, Alert } from 'react-native';
 import { Icon } from "react-native-elements";
 // import AsyncStorage
 import { AsyncStorage } from 'react-native';
 // import icons
 var { height, width } = Dimensions.get('window');
-import NavHeaderRight from '../components/navHeaderRight';
+import firebase from '../database/firebase';
+import NavHeaderLeft from '../components/navHeaderLeft';
 
 
 export default class Cart extends Component {
@@ -13,7 +14,7 @@ export default class Cart extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: () =>
-                <NavHeaderRight toScreen={'Food'} buttonText={'Back'} />
+                <NavHeaderLeft toScreen={'Food'} buttonText={'Back'} />
         };
     };
 
@@ -25,6 +26,7 @@ export default class Cart extends Component {
         };
     }
 
+    // Get the data from our local storage
     componentDidMount() {
         AsyncStorage.getItem('cart').then((cart) => {
             if (cart !== null) {
@@ -38,15 +40,64 @@ export default class Cart extends Component {
             })
     }
 
+    // Send email confirmation using Post method and sendgrid API
+    sendEmail() {
+        let body = { "personalizations": [{ "to": [{ "email": firebase.auth().currentUser.email }], "subject": "Thank you for your order at Foodoor" }], "from": { "email": "chenhonglin1013@hotmail.com" }, "content": [{ "type": "text/plain", "value": "We've received your order, and the restaurant will have your food ready soon. Please be patient, and we will deliver the food to you as soon as possible. If you have any further questions, please contact customer service at 1234@gmail.com or call 123-4567-8910" }] }
+        return fetch('https://api.sendgrid.com/v3/mail/send', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + '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',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        }).then((response) => {
+            return response;
+        }).catch((error) => {
+            return error;
+        });
+    }
+
+
+
+    // sendEmail = () => {
+    //     let body = { "personalizations": [{ "to": [{ "email": firebase.auth().currentUser.email }], "subject": "Thank you for your order at Foodoor" }], "from": { "email": "chenhonglin1013@hotmail.com" }, "content": [{ "type": "text/plain", "value": "We've received your order, and the restaurant will have your food ready soon. Please be patient, and we will deliver the food to you as soon as possible. If you have any further questions, please contact customer service at 1234@gmail.com or call 123-4567-8910" }] }
+    //     this.setState({
+    //         dataCar: []
+    //     })
+    //     Alert.alert(
+    //         'Thank you!',
+    //         'Please check your email for your order!',
+    //         [
+    //             {
+    //                 text: 'Got it!',
+    //                 onPress: () => this.props.navigation.navigate("Dashboard")
+    //             }
+    //         ]
+    //     )
+    //     AsyncStorage.setItem('cart', "");
+    //     return fetch('https://api.sendgrid.com/v3/mail/send', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Authorization': 'Bearer ' + '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',
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(body),
+    //     }).then((response) => {
+    //         return response;
+    //     }).catch((error) => {
+    //         return error;
+    //     });
+    // }
+
+
 
     render() {
-
         return (
             <View style={styles.container}>
                 <View style={styles.middleContainer}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{ height: 20 }} />
-                        <Text style={{ fontSize: 32, fontWeight: "bold", color: "#33c37d" }}>Cart food</Text>
+                        <Text style={{ fontSize: 32, fontWeight: "bold", color: "#33c37d" }}>Your Cart</Text>
                         <View style={{ height: 10 }} />
 
                         <View style={{ flex: 1 }}>
@@ -85,14 +136,17 @@ export default class Cart extends Component {
 
                                 <Text style={{ fontSize: 28, color: "#33c37d", textAlign: 'center' }}>${this.onLoadTotal()}</Text>
 
-                                <TouchableOpacity style={{
-                                    backgroundColor: "#33c37d",
-                                    width: width - 40,
-                                    alignItems: 'center',
-                                    padding: 10,
-                                    borderRadius: 5,
-                                    margin: 20
-                                }}>
+                                <TouchableOpacity
+                                    onPress={() => { this.sendEmail(); this.emptyCart(); }}
+                                    // onPress={this.sendEmail}
+                                    style={{
+                                        backgroundColor: "#33c37d",
+                                        width: width - 40,
+                                        alignItems: 'center',
+                                        padding: 10,
+                                        borderRadius: 5,
+                                        margin: 20
+                                    }}>
                                     <Text style={{
                                         fontSize: 24,
                                         fontWeight: "bold",
@@ -101,7 +155,6 @@ export default class Cart extends Component {
                                         CHECKOUT
                                     </Text>
                                 </TouchableOpacity>
-
                             </ScrollView>
 
                         </View>
@@ -132,43 +185,7 @@ export default class Cart extends Component {
         );
     }
 
-
-    _renderItemFood(item) {
-        let catg = this.state.selectCatg
-        if (catg == 0 || catg == item.categorie) {
-            return (
-                <TouchableOpacity style={styles.divFood}>
-                    <Image
-                        style={styles.imageFood}
-                        resizeMode="contain"
-                        source={{ uri: item.image }} />
-                    <View style={{ height: ((width / 2) - 20) - 90, backgroundColor: 'transparent', width: ((width / 2) - 20) - 10 }} />
-                    <Text style={{ fontWeight: 'bold', fontSize: 22, textAlign: 'center' }}>
-                        {item.name}
-                    </Text>
-                    <Text>Descp Food and Details</Text>
-                    <Text style={{ fontSize: 20, color: "green" }}>${item.price}</Text>
-
-                    <TouchableOpacity
-                        onPress={() => this.onClickAddCart(item)}
-                        style={{
-                            width: (width / 2) - 40,
-                            backgroundColor: '#33c37d',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: "center",
-                            borderRadius: 5,
-                            padding: 4
-                        }}>
-                        <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}>Add Cart</Text>
-                        <View style={{ width: 10 }} />
-                        <Icon type='ionicon' name="ios-add-circle" size={30} color={"white"} />
-                    </TouchableOpacity>
-                </TouchableOpacity>
-            )
-        }
-    }
-
+    // Calculate Total Price
     onLoadTotal() {
         var total = 0
         const cart = this.state.dataCart
@@ -179,6 +196,7 @@ export default class Cart extends Component {
         return total
     }
 
+    // Handle quantity change 
     onChangeQual(i, type) {
         const dataCar = this.state.dataCart
         let cantd = dataCar[i].quantity;
@@ -201,6 +219,25 @@ export default class Cart extends Component {
             AsyncStorage.setItem('cart', JSON.stringify(dataCar));
         }
 
+    }
+
+    // Empty Cart after oder
+    emptyCart = () => {
+
+        this.setState({
+            dataCar: []
+        })
+        Alert.alert(
+            'Thank you!',
+            'Please check your email for your order!',
+            [
+                {
+                    text: 'Got it!',
+                    onPress: () => this.props.navigation.navigate("Dashboard")
+                }
+            ]
+        )
+        AsyncStorage.setItem('cart', "");
     }
 }
 

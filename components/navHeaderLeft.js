@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
-const NavHeaderRight = ({ navigation, toScreen, buttonText }) => {
+const NavHeaderLeft = ({ navigation, toScreen, buttonText }) => {
   return (
     <View style={styles.headerButtonContainer}>
       <Button
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(NavHeaderRight);
+export default withNavigation(NavHeaderLeft);
