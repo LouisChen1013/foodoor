@@ -24,8 +24,8 @@ export default class Dashboard extends Component {
         try {
             const result = await axios.request({
                 method: 'get',
-                // url: 'https://developers.zomato.com/api/v2.1/search?lat=' + this.props.navigation.state.params.lat + '&lon=' + this.props.navigation.state.params.long,
-                url: 'https://developers.zomato.com/api/v2.1/search?lat=49.2252619709647&lon=-123.01240031849',
+                url: 'https://developers.zomato.com/api/v2.1/search?lat=' + this.props.navigation.state.params.lat + '&lon=' + this.props.navigation.state.params.long,
+                // url: 'https://developers.zomato.com/api/v2.1/search?lat=49.2252619709647&lon=-123.01240031849',
                 headers: {
                     'Content-Type': 'application/json',
                     'user-key': '69406d022b48d028657df578276b458e'
@@ -117,6 +117,7 @@ export default class Dashboard extends Component {
                                                     Locattion: {item.restaurant.location.address}{"\n"}
                                                 </Text>
                                                 <Button
+                                                    buttonStyle={{ backgroundColor: '#078282ff' }}
                                                     icon={
                                                         <Icon
                                                             name='restaurant-menu'

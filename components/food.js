@@ -103,7 +103,7 @@ export default class Food extends Component {
                         onPress={() => this.onClickAddCart(item)}
                         style={{
                             width: (width / 2) - 40,
-                            backgroundColor: '#33c37d',
+                            backgroundColor: '#339e66ff',
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: "center",

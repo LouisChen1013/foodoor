@@ -104,7 +104,7 @@ export default class Cart extends Component {
                 <View style={styles.middleContainer}>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{ height: 20 }} />
-                        <Text style={{ fontSize: 32, fontWeight: "bold", color: "#33c37d" }}>Your Cart</Text>
+                        <Text style={{ fontSize: 32, fontWeight: "bold", color: "#339e66ff" }}>Your Cart</Text>
                         <View style={{ height: 10 }} />
 
                         <View style={{ flex: 1 }}>
@@ -122,14 +122,14 @@ export default class Cart extends Component {
                                                         <Text>Lorem Ipsum de food</Text>
                                                     </View>
                                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                                        <Text style={{ fontWeight: 'bold', color: "#33c37d", fontSize: 20 }}>${item.price * item.quantity}</Text>
+                                                        <Text style={{ fontWeight: 'bold', color: "#339e66ff", fontSize: 20 }}>${item.price * item.quantity}</Text>
                                                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                             <TouchableOpacity onPress={() => this.onChangeQual(i, false)}>
-                                                                <Icon type='ionicon' name="ios-remove-circle" size={35} color={"#33c37d"} />
+                                                                <Icon type='ionicon' name="ios-remove-circle" size={35} color={"#339e66ff"} />
                                                             </TouchableOpacity>
                                                             <Text style={{ paddingHorizontal: 8, fontWeight: 'bold', fontSize: 18 }}>{item.quantity}</Text>
                                                             <TouchableOpacity onPress={() => this.onChangeQual(i, true)}>
-                                                                <Icon type='ionicon' name="ios-add-circle" size={35} color={"#33c37d"} />
+                                                                <Icon type='ionicon' name="ios-add-circle" size={35} color={"#339e66ff"} />
                                                             </TouchableOpacity>
                                                         </View>
                                                     </View>
@@ -141,13 +141,13 @@ export default class Cart extends Component {
 
                                 <View style={{ height: 20 }} />
 
-                                <Text style={{ fontSize: 28, color: "#33c37d", textAlign: 'center' }}>${this.onLoadTotal()}</Text>
+                                <Text style={{ fontSize: 28, color: "#339e66ff", textAlign: 'center' }}>${this.onLoadTotal()}</Text>
 
                                 <TouchableOpacity
                                     onPress={() => { this.sendEmail(); this.emptyCart(); }}
                                     // onPress={this.sendEmail}
                                     style={{
-                                        backgroundColor: "#33c37d",
+                                        backgroundColor: "#339e66ff",
                                         width: width - 40,
                                         alignItems: 'center',
                                         padding: 10,
