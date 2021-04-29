@@ -1,6 +1,6 @@
 # foodoor
 
-This project is aimed to build a food ordering service (e.g., Uber, DoorDash, Foodpanda, and ..etc) on a mobile device.
+This project is aimed to build a food ordering service (e.g., Uber, DoorDash, Foodpanda, and ..etc) on a mobile device. Foodoor is a simple service to order food from a variety of restaurants online. Enjoy your favourite dishes across different cuisines and flavours delivered to your door step.
 
 ###### Key Features:
 
