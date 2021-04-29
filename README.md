@@ -1,26 +1,27 @@
 # foodoor
 
-Please run npm install
+This project is aimed to build a food ordering service (e.g., Uber, DoorDash, Foodpanda, and ..etc) on a mobile device.
 
+###### Key Features:
 
-If you miss any packages/dependencies, try to install the following packages 
+- User login/logout/registration
+- Interface to view a user profile
+- List all the restaurants nearby
+- List all the food provided by a restaurant
+- Interface to search food/restaurant by keyword
+- Interface to sort restaurants by rating and cost
+- Interface to place/modify/delete an order
+- Email confirmation upon completion of an order
 
-Package installed:
+###### Technologies:
 
-npm install firebase --save
+- React Native
+- Firebase
+- SendGrid API
+- Git/Github
 
-npm install react-navigation
+###### Members
 
-expo install react-navigation-stack
-
-expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
-
-npm install react-native-elements
-
-npm install axios
-
-npm install react-native-picker-select
-
-npm install --save react-native-sendgrid
-
-
+1. Louis Chen - Developer
+2. Claire Ko - Developer
+3. Andrew Yu- Developer
