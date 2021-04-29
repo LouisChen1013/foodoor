@@ -16,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 var { height, width } = Dimensions.get("window");
 import firebase from "../database/firebase";
 import NavHeaderLeft from "../components/navHeaderLeft";
+import { SENDGRID_API_KEY } from "@env";
 
 export default class Cart extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -85,9 +86,7 @@ export default class Cart extends Component {
     return fetch("https://api.sendgrid.com/v3/mail/send", {
       method: "POST",
       headers: {
-        Authorization:
-          "Bearer " +
-          "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",
+        Authorization: "Bearer " + SENDGRID_API_KEY,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
